@@ -35,6 +35,8 @@ from PriorityQueue import PriorityQueue
 # Import the Luby Sequence Generator methods from LubyGenerator.py file
 from LubyGenerator import reset_luby, get_next_luby_number
 
+# Conflict pause import
+from sample_conflict_handler import conflict_manage
 
 # In[2]:
 
@@ -1353,10 +1355,14 @@ def analyze_conflict(self):
     assigment_stack_pointer = len(self._assignment_stack)-1
     
     # The conflict node is used to get the conflict level and the
-    # clause that caused the conflict
+    # clause that caused the conflict``
     conflict_node = self._assignment_stack[assigment_stack_pointer]
     conflict_level = conflict_node.level
     conflict_clause = self._clauses[conflict_node.clause]
+    
+    # Call sample conflict handler
+    conflict_manage(self, conflict_clause)
+
     
     # As we are analyzing the conflict, we can remove it 
     # from the assignment stack
